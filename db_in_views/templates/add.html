@@ -4,6 +4,14 @@
 <div class="jumbotron">
     <h1>Have a puppy that needs to be adopted?</h1>
     <p>Add a new puppy to our database!</p>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message}}
+    </div>
+    {% endfor %}
     <form method="post">
         {{form.hidden_tag()}}
         {{form.name.label}} {{form.name()}}

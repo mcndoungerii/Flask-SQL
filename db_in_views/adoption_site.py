@@ -1,7 +1,7 @@
 import os
 from forms import AddForm, DelForm, AddOwner,UpdateForm
 
-from flask import Flask,render_template,url_for,redirect
+from flask import Flask,render_template,url_for,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -114,6 +114,8 @@ def add_owner():
 
         db.session.add(owner)
         db.session.commit()
+
+        flash(f"You have added a new Owner: {name}")
 
         return redirect(url_for('list_pup'))
     
