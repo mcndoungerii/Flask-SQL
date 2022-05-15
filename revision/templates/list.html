@@ -6,6 +6,15 @@
 
     <h1>Here's the list of all Puppies</h1>
 
+    {% for mess in get_flashed_messages()%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{mess}}
+    </div>
+    {%endfor%}
+
     <ul>
         {% for puppy in puppies %}
         <li>{{puppy}}</li>

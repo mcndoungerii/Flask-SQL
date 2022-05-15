@@ -72,6 +72,7 @@ def add_pup():
 
         db.session.add(pup_model)
         db.session.commit()
+        flash(f"Puppy {name} have been added successful")
 
         return redirect(url_for('list_pup'))
     
@@ -81,6 +82,7 @@ def add_pup():
 def list_pup():
     
     puppies = Puppy.query.all()
+    # flash(f"Here are the puppies")
 
     return render_template('list.html',puppies=puppies)
 
@@ -90,18 +92,25 @@ def update_pup():
     form = UpdateForm()
 
     if form.validate_on_submit():
-        name = form.name.data
         id = form.id.data
+        name = form.name.data
         breed = form.breed.data
 
+        print(f"Breed is {breed}")
+
         puppy = Puppy.query.get(id)
+
+        print(f"Puppy is {puppy}")
 
         puppy.name = name
 
         if len(breed) > 0:
             puppy.breed = breed
         
+
+        
         db.session.commit()
+        flash(f"Puppy {name} have been updated successful")
         return redirect(url_for('list_pup'))
     return render_template('update.html',form=form)
 
@@ -111,7 +120,9 @@ def del_pup():
 
     if form.validate_on_submit():
         id = form.id.data
-        db.session.delete(id)
+
+        puppy_to_delete = Puppy.query.get(id)
+        db.session.delete(puppy_to_delete)
         db.session.commit()
         flash(f"Puppy of Id {id} have been deleted successful")
         return redirect(url_for('list_pup'))
@@ -130,7 +141,7 @@ def add_owner():
 
         db.session.add(owner_model)
         db.session.commit()
-
+        flash(f"Owner {name} have been added successful")
         return redirect(url_for('list_pup'))
     
     return render_template('owner.html',form=form)
